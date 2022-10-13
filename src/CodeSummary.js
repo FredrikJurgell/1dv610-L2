@@ -21,12 +21,23 @@ export default class CodeSummary {
     analyzedCode.numberOfReturns = this.codeAnalyzer.countReturns(code)
     analyzedCode.numberOfVariables = this.codeAnalyzer.countVariables(code)
     analyzedCode.numberOfWhileLoops = this.codeAnalyzer.countWhileLoops(code)
+    analyzedCode.numberOfInlineComments = this.codeAnalyzer.countInlineComments(code)
 
     return analyzedCode
   }
 
+  inlineCommentsPerLine() {
+    return (this.analyzeCode().numberOfInlineComments / this.analyzeCode().numberOfLines).toFixed(2)
+  }
+
+  charactersPerLine() {
+    return (this.analyzeCode().numberOfCharacters / this.analyzeCode().numberOfLines).toFixed()
+  }
+
   print() {
     console.table(this.analyzeCode())
+    console.log('There are ' + this.inlineCommentsPerLine() + ' comments per line.')
+    console.log('There are ' + this.charactersPerLine() + ' characters per line.')
   }
 
   run() {
