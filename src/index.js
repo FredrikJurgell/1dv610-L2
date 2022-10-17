@@ -1,7 +1,12 @@
 import CodeSummary from './CodeSummary.js'
 
 const main = function () {
-  const codeSummary = new CodeSummary('src/analyzeCodeHere/my-rock-paper-scissors-application.js')
+  const folder = 'src/analyzeCodeHere/'
+
+  // The file you want analyzed.
+  const fileInput = process.argv.slice(2)
+
+  const codeSummary = new CodeSummary(folder + fileInput)
   codeSummary.run()
 }
 
