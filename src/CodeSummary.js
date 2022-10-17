@@ -4,43 +4,56 @@ export default class CodeSummary {
   constructor (file) {
     this.file = file
     this.codeAnalyzer = new CodeAnalyzer(this.file)
+    this.code = this.readCode()
   }
 
-  readCode() {
+  readCode () {
     return this.codeAnalyzer.readFile()
   }
 
-  analyzeCode() {
-    const code = this.readCode()
+  analyzeCode () {
     const analyzedCode = {}
 
-    analyzedCode.numberOfLines = this.codeAnalyzer.countLines(code)
-    analyzedCode.numberOfCharacters = this.codeAnalyzer.countCharacters(code)
-    analyzedCode.numberOfForLoops = this.codeAnalyzer.countForLoops(code)
-    analyzedCode.numberOfJsdocComments = this.codeAnalyzer.countJsdocComments(code)
-    analyzedCode.numberOfReturns = this.codeAnalyzer.countReturns(code)
-    analyzedCode.numberOfVariables = this.codeAnalyzer.countVariables(code)
-    analyzedCode.numberOfWhileLoops = this.codeAnalyzer.countWhileLoops(code)
-    analyzedCode.numberOfInlineComments = this.codeAnalyzer.countInlineComments(code)
+    analyzedCode.numberOfLines = this.codeAnalyzer.countLines(this.code)
+    analyzedCode.numberOfCharacters = this.codeAnalyzer.countCharacters(this.code)
+    analyzedCode.numberOfForLoops = this.codeAnalyzer.countForLoops(this.code)
+    analyzedCode.numberOfJsdocComments = this.codeAnalyzer.countJsdocComments(this.code)
+    analyzedCode.numberOfReturns = this.codeAnalyzer.countReturns(this.code)
+    analyzedCode.numberOfVariables = this.codeAnalyzer.countVariables(this.code)
+    analyzedCode.numberOfWhileLoops = this.codeAnalyzer.countWhileLoops(this.code)
+    analyzedCode.numberOfInlineComments = this.codeAnalyzer.countInlineComments(this.code)
+    analyzedCode.longestLine = this.codeAnalyzer.longestLine(this.code).lineNumber
 
     return analyzedCode
   }
 
-  inlineCommentsPerLine() {
+  inlineCommentsPerLine () {
     return (this.analyzeCode().numberOfInlineComments / this.analyzeCode().numberOfLines).toFixed(2)
   }
 
-  charactersPerLine() {
+  charactersPerLine () {
     return (this.analyzeCode().numberOfCharacters / this.analyzeCode().numberOfLines).toFixed()
   }
 
-  print() {
-    console.table(this.analyzeCode())
-    console.log('There are ' + this.inlineCommentsPerLine() + ' comments per line.')
-    console.log('There are ' + this.charactersPerLine() + ' characters per line.')
+  longestLine () {
+    const longestLine = this.codeAnalyzer.longestLine(this.code).lineLength
+    const lineNumber = this.codeAnalyzer.longestLine(this.code).lineNumber
+    if (longestLine > 125) {
+      return `The longest line is over 125 (${longestLine}) characters, ` +
+        `you should consider shortening it. It's found on line ${lineNumber}.`
+    } else {
+      return `The longest line is (${longestLine}) characters and doesn't seem to long. It's found on line ${lineNumber}.`
+    }
   }
 
-  run() {
+  print () {
+    console.table(this.analyzeCode())
+    console.log('There\'s an average of ' + this.inlineCommentsPerLine() + ' comments per line.')
+    console.log('There\'s an average of ' + this.charactersPerLine() + ' characters per line.')
+    console.log(this.longestLine())
+  }
+
+  run () {
     this.print()
   }
 }
