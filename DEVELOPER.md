@@ -1,3 +1,17 @@
+# Vision
+This application is for you who wants a summory of the code you have written. It should hopfully help you write better code.
+
+
+# Requirements
+* The user should be presented with a table of the collected data.
+* The user should know if a line is longer than 125 characters.
+* The user should get an average of comments per line.
+* The user should get an average of characters per line.
+* The user should be able to select which file thats analyzed when starting the application.
+* All output should be presented in the console.
+* When no filename is entered the application should not start and tell the user a filename must be entered.
+
+
 # Testing
 | Testcase | Whats being tested | How it's tested | Expected result | PASS/FAIL |
 |:-:|----------|-------------|------|------|
