@@ -22,3 +22,5 @@ Place your files in the folder "analyzeCodeHere".
 ![Place your file in this folder](/img/file.png)
 And start the application like this.
 ![Enter npm start file](/img/npmStart.png)
+And you will get output like this.
+![Example output](/img/output.png)
